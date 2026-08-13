@@ -13,9 +13,9 @@ namespace KitchenFridge
         {
             Count = count;
         }
-        public override void PrintInfo()
+        public override string GetInfo()
         {
-            Console.WriteLine($"name: {Name}, count: {Count}");
+            return Name + " " + Count + "(pcs)";
         }
     }
 }

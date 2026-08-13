@@ -13,9 +13,9 @@ namespace KitchenFridge
         {
             Weight = weight;
         }
-        public override void PrintInfo()
+        public override string GetInfo()
         {
-            Console.WriteLine($"name: {Name}, weight: {Weight}(kg)");
+            return Name + " " + Weight + "(kg)";
         }
     }
 }

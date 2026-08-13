@@ -5,14 +5,14 @@ namespace KitchenFridge
 {
     class Liquid : Product
     {
-        public double Liter { get; set; }
+        public double Volume { get; set; }
         public Liquid(string name, double liter = 0.5) : base(name) 
         {
-            Liter = liter;
+            Volume = liter;
         }
-        public override void PrintInfo()
+        public override string GetInfo()
         {
-            Console.WriteLine($"name: {Name}, liters: {Liter}(l)");
+            return Name + " " + Volume +"(l)";
         }
     }
 }
