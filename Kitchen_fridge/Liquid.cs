@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections;
-
-namespace KitchenFridge
+﻿namespace KitchenFridge
 {
-    class Liquid : Product
+    class Liquid : IProduct
     {
+        public string? Name { get; set; }
         public double Volume { get; set; }
-        public Liquid(string name, double liter = 0.5) : base(name) 
+        public Liquid(string name, double volume = 0.5)
         {
-            Volume = liter;
+            Name = name;
+            Volume = volume;
         }
-        public override string GetInfo()
+        public string GetInfo()
         {
-            return Name + " " + Volume +"(l)";
+            return Name + " " + Volume + "(l)";
         }
     }
 }

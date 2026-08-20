@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KitchenFridge
+﻿namespace KitchenFridge
 {
-    class Dairy : Product
+    class Dairy : IProduct
     {
+        public string Name { get; set; }
         public double Weight { get; set; }
-        public Dairy(string name, double weight = 1) : base(name)
+        public Dairy(string name, double weight = 1)
         {
+            Name = name;
             Weight = weight;
         }
-        public override string GetInfo()
+        public string GetInfo()
         {
             return Name + " " + Weight + "(kg)";
         }
