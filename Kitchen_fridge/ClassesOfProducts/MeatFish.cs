@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KitchenFridge
+﻿namespace KitchenFridge
 {
     class MeatFish : Product
     {
         public double Weight { get; set; }
-        public MeatFish(string name, double weight = 1) : base(name)
+        public MeatFish(string name, double weight): base(name)
         {
+            IsValidCountOrWeight(weight);
             Weight = weight;
         }
         public override string GetInfo()

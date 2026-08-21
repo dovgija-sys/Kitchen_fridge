@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KitchenFridge
+﻿namespace KitchenFridge
 {
-    class Fridge
+    class Fridge : IFridge
     {
-        private List<Product> _Products = new List<Product>();
+        private List<IProduct> _Products = new List<IProduct>();
         public List<string> GetView()
         {
             List<string> products = new List<string>();
@@ -18,20 +12,20 @@ namespace KitchenFridge
             }
             return products;
         }
-        public void Add(Product product)
+        public void Add(IProduct product)
         {
             _Products.Add(product);
         }
-        public void Delete(string? ProductName)
+        public void Delete(string productName)
         {
-            if (string.IsNullOrEmpty(ProductName))
+            if (string.IsNullOrEmpty(productName))
             {
                 return;
             }
             for (int i = 0; i < _Products.Count; i++)
             {
                 var product = _Products[i];
-                if (product != null && product.Name == ProductName)
+                if (product != null && product.Name == productName)
                 {
                     _Products.RemoveAt(i);
                     break;
