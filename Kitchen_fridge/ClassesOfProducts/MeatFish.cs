@@ -5,7 +5,6 @@
         public double Weight { get; set; }
         public MeatFish(string name, double weight): base(name)
         {
-            IsValidNameOfProduct(name);
             IsValidCountOrWeight(weight);
             Weight = weight;
         }

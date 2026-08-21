@@ -5,7 +5,6 @@
         public double Volume { get; set; }
         public Liquid(string name, double volume) : base(name)
         {
-            IsValidNameOfProduct(name);
             IsValidCountOrWeight(volume);
             Volume = volume;
         }

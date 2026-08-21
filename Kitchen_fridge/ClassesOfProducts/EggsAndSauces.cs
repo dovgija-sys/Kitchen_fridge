@@ -5,7 +5,6 @@
         public double Count { get; set; }
         public EggsAndSauces(string name, double count) : base(name)
         {
-            IsValidNameOfProduct(name);
             IsValidCountOrWeight(count);
             Count = count;
         }
