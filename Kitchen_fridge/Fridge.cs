@@ -16,16 +16,16 @@
         {
             _Products.Add(product);
         }
-        public void Delete(string? ProductName)
+        public void Delete(string productName)
         {
-            if (string.IsNullOrEmpty(ProductName))
+            if (string.IsNullOrEmpty(productName))
             {
                 return;
             }
             for (int i = 0; i < _Products.Count; i++)
             {
                 var product = _Products[i];
-                if (product != null && product.Name == ProductName)
+                if (product != null && product.Name == productName)
                 {
                     _Products.RemoveAt(i);
                     break;

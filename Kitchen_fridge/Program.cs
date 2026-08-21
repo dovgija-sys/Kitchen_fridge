@@ -9,7 +9,7 @@ namespace KitchenFridge
         static void Main(string[] args)
         {
             Fridge fridge = new Fridge();
-            int choise, addChoise;
+            int choise;
             do
             {
                 choise = GetOperation();
@@ -27,50 +27,50 @@ namespace KitchenFridge
                         WaitMenu();
                         break;
                     case 2:
-                        Console.WriteLine("Press 1 if you want to add liquid");
+                        Console.WriteLine("\nPress 1 if you want to add liquid");
                         Console.WriteLine("Press 2 if you want to add meat or fish");
                         Console.WriteLine("Press 3 if you want to add dairy food");
                         Console.WriteLine("Press 4 if you want to add produse");
                         Console.WriteLine("Press 5 if you want to add eggs or sause");
                         Console.WriteLine("Press 0 to exit.\n");
                         Console.Write("Enter a number: ");
-                        int ChoiseAdd = Convert.ToInt32(Console.ReadLine());
+                        int choiseAdd = Convert.ToInt32(Console.ReadLine());
                         string? name;
                     repeat:
                         try
                         {
-                            switch (ChoiseAdd)
+                            switch (choiseAdd)
                             {
                                 case 0:
                                     break;
                                 case 1:
                                     name = SetNameOfProduct();
-                                    double value = SetCountOfProduct();
-                                    IProduct liquid = new Liquid(name, value);
+                                    double valume = SetCountOfProduct();
+                                    Product liquid = new Liquid(name, valume);
                                     fridge.Add(liquid);
                                     break;
                                 case 2:
                                     name = SetNameOfProduct();
                                     double WeightOfMeat = SetCountOfProduct();
-                                    IProduct meatfish = new MeatFish(name, WeightOfMeat);
+                                    Product meatfish = new MeatFish(name, WeightOfMeat);
                                     fridge.Add(meatfish);
                                     break;
                                 case 3:
                                     name = SetNameOfProduct();
                                     double WeightOfDairy = SetCountOfProduct();
-                                    IProduct dairy = new Dairy(name, WeightOfDairy);
+                                    Product dairy = new Dairy(name, WeightOfDairy);
                                     fridge.Add(dairy);
                                     break;
                                 case 4:
                                     name = SetNameOfProduct();
                                     double WeightOfProduce = SetCountOfProduct();
-                                    IProduct produce = new Produce(name, WeightOfProduce);
+                                    Product produce = new Produce(name, WeightOfProduce);
                                     fridge.Add(produce);
                                     break;
                                 case 5:
                                     name = SetNameOfProduct();
                                     double CountOfEggsOrSauce = SetCountOfProduct();
-                                    IProduct eggsAndSauces = new EggsAndSauces(name, CountOfEggsOrSauce);
+                                    Product eggsAndSauces = new EggsAndSauces(name, CountOfEggsOrSauce);
                                     fridge.Add(eggsAndSauces);
                                     break;
                                 default:
@@ -78,31 +78,26 @@ namespace KitchenFridge
                                     break;
                             }
                         }
-                        catch (ProductNameException ex)
+                        catch (ProductExceptions ex)
                         {
-                            Console.WriteLine(ex.Message);
-                            goto repeat;
-                        }
-                        catch (ProductCountException ex) 
-                        {
-                            Console.WriteLine(ex.Message);
+                            Console.WriteLine(ex.Message + " Please try again\n");
                             goto repeat;
                         }
                         catch (FormatException)
                         {
-                            Console.WriteLine("Invalid input format. Please enter a valid number.");
+                            Console.WriteLine("Invalid input format, please try again.\n");
                             goto repeat;
                         }
                         WaitMenu();
                         break;
                     case 3:
                         Console.Write("Enter name of the product you want to delete: ");
-                        string? ProductName = Console.ReadLine();
-                        fridge.Delete(ProductName);
+                        string productName = Console.ReadLine();
+                        fridge.Delete(productName);
                         WaitMenu();
                         break;
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.WriteLine("Invalid choice. Please try again.\n");
                         break;         
                 }
                 Console.Clear();
@@ -127,39 +122,13 @@ namespace KitchenFridge
         {
             Console.Write("Enter name: ");
             string? name = Console.ReadLine();
-            IsValidNameOfProduct(name);
             return name;
         }
         static double SetCountOfProduct()
         {
             Console.Write("Enter count(or value/weight): ");
             double count = Convert.ToDouble(Console.ReadLine());
-            IsValidCountOrWeight(count);
             return count;   
-        }
-        static bool IsValidNameOfProduct(string? name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ProductNameException("Invalid product name. It cant be empty.");
-            }
-            else if(name.Length > 20)
-            {
-                throw new ProductNameException("Invalid product name. It cant be more than 20.");
-            }
-            else if (name.Any(ch => !char.IsLetterOrDigit(ch)))
-            {
-                throw new ProductNameException("Invalid product name. It can only contain letters and digits.");
-            }
-            return true;
-        }
-        static bool IsValidCountOrWeight(double countOrWeight)
-        {
-            if (countOrWeight <= 0 || countOrWeight > 20)
-            {
-                throw new ProductCountException("Invalid count(or value/weight). It must be greater than zero and no more than 20.");
-            }
-            return true;
         }
     }
 }

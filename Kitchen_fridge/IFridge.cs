@@ -4,6 +4,6 @@
     {
         public List<string> GetView();
         public void Add(IProduct product);
-        public void Delete(string? ProductName);
+        public void Delete(string productName);
     }
 }

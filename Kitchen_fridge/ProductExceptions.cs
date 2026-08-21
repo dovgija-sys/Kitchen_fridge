@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KitchenFridge
+﻿namespace KitchenFridge
 {
-    class ProductNameException : Exception
+    class ProductExceptions : Exception
     {
-        public ProductNameException(string message) : base(message)
-        {
-        }
-    }
-    class ProductCountException : Exception
-    {
-        public ProductCountException(string message) : base(message)
+        public ProductExceptions(string message) : base(message)
         {
         }
     }
