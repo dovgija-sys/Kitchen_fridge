@@ -1,6 +1,8 @@
-﻿namespace KitchenFridge
+﻿using KitchenFridge.Domain.Interfaces;
+
+namespace KitchenFridge.Domain
 {
-    class Fridge : IFridge
+    public class Fridge : IFridge
     {
         private List<IProduct> _Products = new List<IProduct>();
         public List<string> GetView()

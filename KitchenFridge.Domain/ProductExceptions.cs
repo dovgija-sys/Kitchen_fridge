@@ -1,6 +1,6 @@
-﻿namespace KitchenFridge
+﻿namespace KitchenFridge.Domain
 {
-    class ProductExceptions : Exception
+    public class ProductExceptions : Exception
     {
         public ProductExceptions(string message) : base(message)
         {

@@ -1,6 +1,6 @@
-﻿namespace KitchenFridge
+﻿namespace KitchenFridge.Domain.Products
 {
-    class Liquid : Product
+    public class Liquid : Product
     {
         public double Volume { get; set; }
         public Liquid(string name, double volume) : base(name)
