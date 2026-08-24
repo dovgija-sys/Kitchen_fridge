@@ -1,6 +1,6 @@
-﻿namespace KitchenFridge
+﻿namespace KitchenFridge.Domain.Products
 {
-    class EggsAndSauces : Product
+    public class EggsAndSauces : Product
     {
         public double Count { get; set; }
         public EggsAndSauces(string name, double count) : base(name)

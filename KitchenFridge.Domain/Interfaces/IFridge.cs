@@ -1,6 +1,6 @@
-﻿namespace KitchenFridge
+﻿namespace KitchenFridge.Domain.Interfaces
 {
-    interface IFridge
+    public interface IFridge
     {
         public List<string> GetView();
         public void Add(IProduct product);

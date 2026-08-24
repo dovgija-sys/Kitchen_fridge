@@ -1,8 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection.Emit;
-using System.Xml.Linq;
-namespace KitchenFridge
+﻿using KitchenFridge.Domain;
+using KitchenFridge.Domain.Products;
+
+namespace KitchenFridge.ConsoleApp
 {
     class Program
     {

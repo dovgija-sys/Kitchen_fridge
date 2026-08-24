@@ -1,6 +1,8 @@
-﻿namespace KitchenFridge
+﻿using KitchenFridge.Domain.Interfaces;
+
+namespace KitchenFridge.Domain.Products
 {
-    abstract class Product : IProduct 
+    public abstract class Product : IProduct 
     {
         public string Name { get; set; }
         public Product(string name)
