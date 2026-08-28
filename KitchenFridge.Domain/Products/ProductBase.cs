@@ -2,10 +2,10 @@
 
 namespace KitchenFridge.Domain.Products
 {
-    public abstract class Product : IProduct 
+    public abstract class ProductBase : IProduct 
     {
         public string Name { get; set; }
-        public Product(string name)
+        public ProductBase(string name)
         {
             IsValidNameOfProduct(name);
             Name = name;

@@ -1,6 +1,6 @@
 ﻿namespace KitchenFridge.Domain.Products
 {
-    public class Dairy : Product
+    public class Dairy : ProductBase
     {
         public double Weight { get; set; }
         public Dairy(string name, double weight) : base(name)

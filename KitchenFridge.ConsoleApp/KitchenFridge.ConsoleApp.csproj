@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KitchenFridge.DB\KitchenFridge.DB.csproj" />
     <ProjectReference Include="..\KitchenFridge.Domain\KitchenFridge.Domain.csproj" />
   </ItemGroup>
 
