@@ -1,6 +1,11 @@
-﻿using KitchenFridge.Domain;
+﻿using KitchenFridge.DB;
+using KitchenFridge.DB.Entities;
+using KitchenFridge.DB.Repository;
+using KitchenFridge.DB.Repository.ProductRepo;
+using KitchenFridge.DB.Repository.RecipeProductRepo;
+using KitchenFridge.DB.Repository.RecipeRepo;
+using KitchenFridge.Domain;
 using KitchenFridge.Domain.Products;
-using KitchenFridge.DB;
 
 namespace KitchenFridge.ConsoleApp
 {
@@ -10,11 +15,18 @@ namespace KitchenFridge.ConsoleApp
         {
             using (KitchenFridgeContext db = new KitchenFridgeContext())
             {
+                var productCrud = new ProductCRUD();
+                var recipeCrud = new RecipeCRUD();
+                var recipeProductCrud = new RecipeProductCRUD();
                 db.Database.EnsureDeleted();
-                if (db.Database.EnsureCreated())
-                {
-                    Console.WriteLine("OK!!");
-                }
+                db.Database.EnsureCreated();
+                var product = new Product { Name = "Milk"};
+                var recipe = new Recipe { Name = "MilkShake" };
+                var recipeProduct = new RecipeProduct { Product = product, Count = 0.3};
+                recipeProduct.Recipes.Add(recipe);
+                recipeProductCrud.Add(recipeProduct);
+                productCrud.Delete(product.Id);
+                
             }
             var listOfRecipes = new List<RecipeBase>();
             FridgeBase fridge = new FridgeBase();

@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-
+﻿
 namespace KitchenFridge.DB.Entities
 {
     public class RecipeProduct
