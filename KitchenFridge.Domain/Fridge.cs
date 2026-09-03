@@ -2,9 +2,9 @@
 
 namespace KitchenFridge.Domain
 {
-    public class FridgeBase : IFridge
+    public class Fridge : IFridge
     {
-        private List<IProduct> _Products = new List<IProduct>();
+        private List<IProduct> _Products = [];
         public List<string> GetView()
         {
             List<string> products = new List<string>();

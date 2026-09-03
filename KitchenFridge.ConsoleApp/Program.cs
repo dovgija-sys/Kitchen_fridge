@@ -1,11 +1,8 @@
 ﻿using KitchenFridge.DB;
 using KitchenFridge.DB.Entities;
-using KitchenFridge.DB.Repository;
-using KitchenFridge.DB.Repository.ProductRepo;
-using KitchenFridge.DB.Repository.RecipeProductRepo;
-using KitchenFridge.DB.Repository.RecipeRepo;
 using KitchenFridge.Domain;
 using KitchenFridge.Domain.Products;
+using KitchenFridge.DB.Repository;
 
 namespace KitchenFridge.ConsoleApp
 {
@@ -13,23 +10,26 @@ namespace KitchenFridge.ConsoleApp
     {
         static void Main(string[] args)
         {
-            using (KitchenFridgeContext db = new KitchenFridgeContext())
+            using (KitchenFridgeContext db = new())
             {
-                var productCrud = new ProductCRUD();
-                var recipeCrud = new RecipeCRUD();
-                var recipeProductCrud = new RecipeProductCRUD();
+                var productCrud = new ProductRepository(db);
+                var recipeCrud = new RecipeRepository(db);
+                var recipeProductCrud = new RecipeProductRepository(db);
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                var product = new Product { Name = "Milk"};
-                var recipe = new Recipe { Name = "MilkShake" };
-                var recipeProduct = new RecipeProduct { Product = product, Count = 0.3};
-                recipeProduct.Recipes.Add(recipe);
-                recipeProductCrud.Add(recipeProduct);
-                productCrud.Delete(product.Id);
-                
+                var product1 = new Product { Name = "Milk"};
+                var product2 = new Product { Name = "Banana"};
+                var recipe = new DB.Entities.Recipe { Name = "MilkShake" };
+                productCrud.Add(product1);
+                productCrud.Add(product2);
+                recipeCrud.Add(recipe);
+                var recipeProduct1 = new RecipeProduct { Product = product1, Count = 0.3, Recipe = recipe};
+                var recipeProduct2 = new RecipeProduct { Product = product2, Count = 1, Recipe = recipe};
+                recipeProductCrud.Add(recipeProduct1);
+                recipeProductCrud.Add(recipeProduct2);
             }
-            var listOfRecipes = new List<RecipeBase>();
-            FridgeBase fridge = new FridgeBase();
+            var listOfRecipes = new List<Domain.Recipe>();
+            Domain.Fridge fridge = new();
             int choise;
             do
             {
@@ -111,7 +111,7 @@ namespace KitchenFridge.ConsoleApp
                     case 4:
                         Console.Write("Enter name of the recipe: ");
                         string recipeName = Console.ReadLine();
-                        var recipe = new RecipeBase(recipeName);
+                        var recipe = new Domain.Recipe(recipeName);
                         Console.WriteLine("Enter the ingredients:");
                         var choiseAddIngredient = GetOperationForAddingProduct();
                         while (choiseAddIngredient != 0)

@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public FridgeProduct? FridgeProduct { get; set; }
-        public RecipeProduct? RecipeProduct { get; set; }
+        public List<FridgeProduct> FridgeProduct { get; set; } = new();
+        public List<RecipeProduct> RecipeProduct { get; set; } = new();
     }
 }

@@ -7,7 +7,8 @@ namespace KitchenFridge.DB.Entities
         public double Count { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
-        public List<Recipe> Recipes { get; set; } = new();
+        public int RecipeId { get; set; }
+        public Recipe? Recipe { get; set; }
 
     }
 }

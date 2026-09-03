@@ -1,8 +1,8 @@
 ﻿using KitchenFridge.DB.Entities;
 
-namespace KitchenFridge.DB.Repository.RecipeRepo
+namespace KitchenFridge.DB.Repository.Interfaces
 {
-    public interface IRecipeCRUD
+    public interface IRecipeRepository
     {
         public void Add(Recipe recipe);
         public List<Recipe> Get();

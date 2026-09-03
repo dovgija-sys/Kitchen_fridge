@@ -19,11 +19,26 @@ namespace KitchenFridge.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>().Property(n => n.Name).HasMaxLength(20);
-            modelBuilder.Entity<Fridge>().Property(n => n.Name).HasMaxLength(20);
-            modelBuilder.Entity<FridgeProduct>().ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"));
-            modelBuilder.Entity<Recipe>().Property(n => n.Name).HasMaxLength(20);
-            modelBuilder.Entity<RecipeProduct>().ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"));
+            modelBuilder.Entity<Product>()
+                        .Property(n => n.Name).HasMaxLength(20);
+
+            modelBuilder.Entity<Fridge>()
+                        .Property(n => n.Name).HasMaxLength(20);
+
+            modelBuilder.Entity<FridgeProduct>()
+                        .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"));
+
+            modelBuilder.Entity<Recipe>()
+                        .Property(n => n.Name).HasMaxLength(20);
+
+            modelBuilder.Entity<RecipeProduct>()
+                        .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"))
+                        .HasOne(p => p.Product)
+                        .WithMany(rp => rp.RecipeProduct)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+           
+                        
         }
 
     }

@@ -1,8 +1,8 @@
 ﻿using KitchenFridge.DB.Entities;
 
-namespace KitchenFridge.DB.Repository.FridgeProductRepo
+namespace KitchenFridge.DB.Repository.Interfaces
 {
-    public interface IFridgeProductCRUD
+    public interface IFridgeProductRepository
     {
         public void Add(FridgeProduct fridgeProduct);
         public List<FridgeProduct> Get();

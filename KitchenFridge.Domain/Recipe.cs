@@ -1,13 +1,12 @@
 ﻿using KitchenFridge.Domain.Interfaces;
-using KitchenFridge.Domain.Products;
 
 namespace KitchenFridge.Domain
 {
-    public class RecipeBase : IRecipe
+    public class Recipe : IRecipe
     {
         private List<IProduct> _Ingredients = new List<IProduct>();
         public string Name { get; set; }
-        public RecipeBase(string name)
+        public Recipe(string name)
         {
             Name = name;
         }

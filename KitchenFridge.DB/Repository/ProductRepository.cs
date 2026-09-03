@@ -1,19 +1,20 @@
 ﻿using KitchenFridge.DB.Entities;
+using KitchenFridge.DB.Repository.Interfaces;
 
-namespace KitchenFridge.DB.Repository.ProductRepo
+namespace KitchenFridge.DB.Repository
 {
-    public class ProductCRUD : IProductCRUD
+    public class ProductRepository : IProductRepository
     {
+        private readonly KitchenFridgeContext _db;
+        public ProductRepository(KitchenFridgeContext db) => _db = db;
         public void Add(Product product)
         {
-            using var db = new KitchenFridgeContext();
-            db.Products.Add(product);
-            db.SaveChanges();
+            _db.Products.Add(product);
+            _db.SaveChanges();
         }
         public List<Product> GetNeededProducts(string productName)
         {
-            using var db = new KitchenFridgeContext();
-            var allProducts = db.Products.ToList();
+            var allProducts = _db.Products.ToList();
             var getNeededProducts = new List<Product>();
             foreach (var product in allProducts)
             {
@@ -26,35 +27,31 @@ namespace KitchenFridge.DB.Repository.ProductRepo
         }
         public List<Product> GetAllProducts()
         {
-            using var db = new KitchenFridgeContext();
-            var allProducts = db.Products.ToList();
+            var allProducts = _db.Products.ToList();
             return allProducts;
         }
         public Product GetConcreteProduct(int id)
         {
-            using var db = new KitchenFridgeContext();
-            var concreteProduct = db.Products.FirstOrDefault(n => n.Id == id);
+            var concreteProduct = _db.Products.FirstOrDefault(n => n.Id == id);
             return concreteProduct;
         }
         public void Update(int id, string newName) 
         {
-            using var db = new KitchenFridgeContext();
-            var updProduct = db.Products.FirstOrDefault(n => n.Id == id);
+            var updProduct = _db.Products.FirstOrDefault(n => n.Id == id);
             if (updProduct != null)
             {
                 updProduct.Name = newName;
-                db.Products.Update(updProduct);
-                db.SaveChanges();
+                _db.Products.Update(updProduct);
+                _db.SaveChanges();
             }
         }
         public bool Delete(int id)
         {
-            using var db = new KitchenFridgeContext();
-            var deleteProduct = db.Products.FirstOrDefault(n => n.Id == id);
+            var deleteProduct = _db.Products.FirstOrDefault(n => n.Id == id);
             if (deleteProduct != null)
             {
-                db.Products.Remove(deleteProduct);
-                db.SaveChanges();
+                _db.Products.Remove(deleteProduct);
+                _db.SaveChanges();
                 return true;
             }
             return false;  
