@@ -1,8 +1,9 @@
 ﻿using KitchenFridge.DB;
 using KitchenFridge.DB.Entities;
+using KitchenFridge.DB.Entities.ProductEntities;
+using KitchenFridge.DB.Repository;
 using KitchenFridge.Domain;
 using KitchenFridge.Domain.Products;
-using KitchenFridge.DB.Repository;
 
 namespace KitchenFridge.ConsoleApp
 {
@@ -17,7 +18,7 @@ namespace KitchenFridge.ConsoleApp
                 var recipeProductCrud = new RecipeProductRepository(db);
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                var product1 = new Product { Name = "Milk"};
+                var product1 = new DB.Entities.ProductEntities.Liquid { Name = "Milk"};
                 var product2 = new Product { Name = "Banana"};
                 var recipe = new DB.Entities.Recipe { Name = "MilkShake" };
                 productCrud.Add(product1);
@@ -58,31 +59,31 @@ namespace KitchenFridge.ConsoleApp
                                 case 1:
                                     name = SetNameOfProduct();
                                     double valume = SetCountOfProduct();
-                                    ProductBase liquid = new Liquid(name, valume);
+                                    ProductBase liquid = new Domain.Products.Liquid(name, valume);
                                     fridge.Add(liquid);
                                     break;
                                 case 2:
                                     name = SetNameOfProduct();
                                     double WeightOfMeat = SetCountOfProduct();
-                                    ProductBase meatfish = new MeatFish(name, WeightOfMeat);
+                                    ProductBase meatfish = new Domain.Products.MeatFish(name, WeightOfMeat);
                                     fridge.Add(meatfish);
                                     break;
                                 case 3:
                                     name = SetNameOfProduct();
                                     double WeightOfDairy = SetCountOfProduct();
-                                    ProductBase dairy = new Dairy(name, WeightOfDairy);
+                                    ProductBase dairy = new Domain.Products.Dairy(name, WeightOfDairy);
                                     fridge.Add(dairy);
                                     break;
                                 case 4:
                                     name = SetNameOfProduct();
                                     double WeightOfProduce = SetCountOfProduct();
-                                    ProductBase produce = new Produce(name, WeightOfProduce);
+                                    ProductBase produce = new Domain.Products.Produce(name, WeightOfProduce);
                                     fridge.Add(produce);
                                     break;
                                 case 5:
                                     name = SetNameOfProduct();
                                     double CountOfEggsOrSauce = SetCountOfProduct();
-                                    ProductBase eggsAndSauces = new EggsAndSauces(name, CountOfEggsOrSauce);
+                                    ProductBase eggsAndSauces = new Domain.Products.EggsAndSauces(name, CountOfEggsOrSauce);
                                     fridge.Add(eggsAndSauces);
                                     break;
                                 default:
@@ -124,31 +125,31 @@ namespace KitchenFridge.ConsoleApp
                                     case 1:
                                         name = SetNameOfProduct();
                                         double valume = SetCountOfProduct();
-                                        var liquid = new Liquid(name, valume);
+                                        var liquid = new Domain.Products.Liquid(name, valume);
                                         recipe.Add(liquid);
                                         break;
                                     case 2:
                                         name = SetNameOfProduct();
                                         double WeightOfMeat = SetCountOfProduct();
-                                        var meatfish = new MeatFish(name, WeightOfMeat);
+                                        var meatfish = new Domain.Products.MeatFish(name, WeightOfMeat);
                                         recipe.Add(meatfish);
                                         break;
                                     case 3:
                                         name = SetNameOfProduct();
                                         double WeightOfDairy = SetCountOfProduct();
-                                        var dairy = new Dairy(name, WeightOfDairy);
+                                        var dairy = new Domain.Products.Dairy(name, WeightOfDairy);
                                         recipe.Add(dairy);
                                         break;
                                     case 4:
                                         name = SetNameOfProduct();
                                         double WeightOfProduce = SetCountOfProduct();
-                                        var produce = new Produce(name, WeightOfProduce);
+                                        var produce = new Domain.Products.Produce(name, WeightOfProduce);
                                         recipe.Add(produce);
                                         break;
                                     case 5:
                                         name = SetNameOfProduct();
                                         double CountOfEggsOrSauce = SetCountOfProduct();
-                                        var eggsAndSauces = new EggsAndSauces(name, CountOfEggsOrSauce);
+                                        var eggsAndSauces = new Domain.Products.EggsAndSauces(name, CountOfEggsOrSauce);
                                         recipe.Add(eggsAndSauces);
                                         break;
                                     default:

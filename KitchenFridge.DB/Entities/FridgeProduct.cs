@@ -1,4 +1,6 @@
-﻿namespace KitchenFridge.DB.Entities
+﻿using KitchenFridge.DB.Entities.ProductEntities;
+
+namespace KitchenFridge.DB.Entities
 {
     public class FridgeProduct
     {

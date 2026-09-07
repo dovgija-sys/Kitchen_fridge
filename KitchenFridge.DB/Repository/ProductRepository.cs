@@ -1,4 +1,4 @@
-﻿using KitchenFridge.DB.Entities;
+﻿using KitchenFridge.DB.Entities.ProductEntities;
 using KitchenFridge.DB.Repository.Interfaces;
 
 namespace KitchenFridge.DB.Repository

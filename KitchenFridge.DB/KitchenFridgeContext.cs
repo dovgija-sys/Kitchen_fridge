@@ -1,11 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using KitchenFridge.DB.Entities;
+using KitchenFridge.DB.Entities.ProductEntities;
 
 namespace KitchenFridge.DB
 {
     public class KitchenFridgeContext : DbContext
     {
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<Dairy> Daires { get; set; } = null!;
+        public DbSet<Liquid> Liquids { get; set; } = null!;
+        public DbSet<Produce> Produces { get; set; } = null!;
+        public DbSet<MeatFish> MeatFishes { get; set; } = null!;
+        public DbSet<EggsAndSauces> EggsAndSauceses { get; set; } = null!;
         public DbSet<Fridge> Fridges { get; set; } = null!;
         public DbSet<FridgeProduct> FridgeProducts { get; set; } = null!;
         public DbSet<Recipe> Recipes { get; set; } = null!;
@@ -19,14 +25,18 @@ namespace KitchenFridge.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>()
-                        .Property(n => n.Name).HasMaxLength(20);
+            modelBuilder.Entity<Product>().HasDiscriminator(p => p.ProductType);
+            modelBuilder.Entity<Product>().Property(n => n.Name).HasMaxLength(20);
+                        
 
             modelBuilder.Entity<Fridge>()
                         .Property(n => n.Name).HasMaxLength(20);
 
             modelBuilder.Entity<FridgeProduct>()
-                        .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"));
+                        .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"))
+                        .HasOne(p => p.Product)
+                        .WithMany(fp => fp.FridgeProduct)
+                        .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Recipe>()
                         .Property(n => n.Name).HasMaxLength(20);
@@ -35,10 +45,7 @@ namespace KitchenFridge.DB
                         .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"))
                         .HasOne(p => p.Product)
                         .WithMany(rp => rp.RecipeProduct)
-                        .OnDelete(DeleteBehavior.Cascade);
-
-           
-                        
+                        .OnDelete(DeleteBehavior.Cascade);                                   
         }
 
     }
