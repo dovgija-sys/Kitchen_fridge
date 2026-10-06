@@ -7,37 +7,46 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public FridgeRepository(KitchenFridgeContext db) => _db = db;
-        public void Add(Fridge fridge)
+        public int Add(Fridge fridge)
         {
-            
             _db.Fridges.Add(fridge);
             _db.SaveChanges();
+
+            return fridge.Id;
         }
         public List<Fridge> Get()
         {
             var fridges = _db.Fridges.ToList();
             return fridges;
         }
-        public void Update(int id, string newName)
+
+        public Fridge GetFridgeById(int id)
         {
-            var updFridge = _db.Fridges.FirstOrDefault(n => n.Id == id);
+            var fridge = _db.Fridges.FirstOrDefault(n => n.Id == id);
+            if (fridge == null)
+            {
+                return null;
+            }
+            return fridge;
+        }
+        public void Update(Fridge fridge)
+        {
+            var updFridge = _db.Fridges.FirstOrDefault(n => n.Id == fridge.Id);
             if (updFridge != null)
             {
-                updFridge.Name = newName;
+                updFridge.Name = fridge.Name;
                 _db.Fridges.Update(updFridge);
                 _db.SaveChanges();
             }
         }
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             var deleteFridge = _db.Fridges.FirstOrDefault(n => n.Id == id);
             if (deleteFridge != null)
             {
                 _db.Fridges.Remove(deleteFridge);
                 _db.SaveChanges();
-                return true;
             }
-            return false;
         }
     }
 }

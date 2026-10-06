@@ -27,10 +27,12 @@ namespace KitchenFridge.DB
         {
             modelBuilder.Entity<Product>().HasDiscriminator(p => p.ProductType);
             modelBuilder.Entity<Product>().Property(n => n.Name).HasMaxLength(20);
-                        
+            modelBuilder.Entity<Product>()
+                .Property(p => p.ProductType)
+                .Metadata.SetAfterSaveBehavior(Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Save);
 
-            modelBuilder.Entity<Fridge>()
-                        .Property(n => n.Name).HasMaxLength(20);
+            modelBuilder.Entity<Fridge>().Property(n => n.Name).HasMaxLength(20);
+
 
             modelBuilder.Entity<FridgeProduct>()
                         .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"))

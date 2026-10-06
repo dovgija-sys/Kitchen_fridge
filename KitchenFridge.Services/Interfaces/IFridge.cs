@@ -1,4 +1,4 @@
-﻿namespace KitchenFridge.Domain.Interfaces
+﻿namespace KitchenFridge.Services.Interfaces
 {
     public interface IFridge
     {

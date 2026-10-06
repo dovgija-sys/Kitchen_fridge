@@ -7,10 +7,11 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public RecipeProductRepository(KitchenFridgeContext db) => _db = db;
-        public void Add(RecipeProduct recipeProduct)
+        public int Add(RecipeProduct recipeProduct)
         {
             _db.RecipeProducts.Add(recipeProduct);
             _db.SaveChanges();
+            return recipeProduct.Id;
         }
         public List<RecipeProduct> Get()
         {
@@ -28,16 +29,14 @@ namespace KitchenFridge.DB.Repository
                 _db.SaveChanges();
             }
         }
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             var deleteRecipeProduct = _db.RecipeProducts.FirstOrDefault(i => i.Id == id);
             if (deleteRecipeProduct != null)
             {
                 _db.RecipeProducts.Remove(deleteRecipeProduct);
                 _db.SaveChanges();
-                return true;
             }
-            return false;
         }
     }
 }

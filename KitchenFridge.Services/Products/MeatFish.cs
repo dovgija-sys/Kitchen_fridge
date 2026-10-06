@@ -1,9 +1,9 @@
-﻿namespace KitchenFridge.Domain.Products
+﻿namespace KitchenFridge.Services.Products
 {
-    public class Produce : ProductBase
+    public class MeatFish : ProductBase
     {
         public double Weight { get; set; }
-        public Produce(string name, double weight) : base(name)
+        public MeatFish(string name, double weight): base(name)
         {
             IsValidCountOrWeight(weight);
             Weight = weight;

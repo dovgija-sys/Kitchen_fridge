@@ -1,0 +1,6 @@
+@KitchenFridge.WebApp_HostAddress = http://localhost:5045
+
+GET {{KitchenFridge.WebApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

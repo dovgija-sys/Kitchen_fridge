@@ -1,6 +1,6 @@
-﻿using KitchenFridge.Domain.Interfaces;
+﻿using KitchenFridge.Services.Interfaces;
 
-namespace KitchenFridge.Domain
+namespace KitchenFridge.Services
 {
     public class Recipe : IRecipe
     {

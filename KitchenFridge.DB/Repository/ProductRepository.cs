@@ -7,54 +7,41 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public ProductRepository(KitchenFridgeContext db) => _db = db;
-        public void Add(Product product)
+        public int Add(Product product)
         {
             _db.Products.Add(product);
             _db.SaveChanges();
+            return product.Id;
         }
-        public List<Product> GetNeededProducts(string productName)
-        {
-            var allProducts = _db.Products.ToList();
-            var getNeededProducts = new List<Product>();
-            foreach (var product in allProducts)
-            {
-                if (product.Name.ToLower() == productName.ToLower())
-                {
-                    getNeededProducts.Add(product);
-                }
-            }
-            return getNeededProducts;
-        }
-        public List<Product> GetAllProducts()
+        public List<Product> Get()
         {
             var allProducts = _db.Products.ToList();
             return allProducts;
         }
-        public Product GetConcreteProduct(int id)
+        public Product GetProductById(int id)
         {
-            var concreteProduct = _db.Products.FirstOrDefault(n => n.Id == id);
-            return concreteProduct;
+            var product = _db.Products.FirstOrDefault(p => p.Id == id);
+            return product;
         }
-        public void Update(int id, string newName) 
+        public void Update(Product product) 
         {
-            var updProduct = _db.Products.FirstOrDefault(n => n.Id == id);
+            var updProduct = _db.Products.FirstOrDefault(n => n.Id == product.Id);
             if (updProduct != null)
             {
-                updProduct.Name = newName;
+                updProduct.Name = product.Name;
+                updProduct.ProductType = product.ProductType;
                 _db.Products.Update(updProduct);
                 _db.SaveChanges();
             }
         }
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             var deleteProduct = _db.Products.FirstOrDefault(n => n.Id == id);
             if (deleteProduct != null)
             {
                 _db.Products.Remove(deleteProduct);
                 _db.SaveChanges();
-                return true;
             }
-            return false;  
         }
     }
 }

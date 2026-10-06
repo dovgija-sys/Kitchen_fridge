@@ -1,4 +1,4 @@
-﻿namespace KitchenFridge.Domain
+﻿namespace KitchenFridge.Services
 {
     public class ProductExceptions : Exception
     {

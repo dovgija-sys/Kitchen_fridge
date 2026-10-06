@@ -1,6 +1,6 @@
-﻿using KitchenFridge.Domain.Interfaces;
+﻿using KitchenFridge.Services.Interfaces;
 
-namespace KitchenFridge.Domain.Products
+namespace KitchenFridge.Services.Products
 {
     public abstract class ProductBase : IProduct 
     {

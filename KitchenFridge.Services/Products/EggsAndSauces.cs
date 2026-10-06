@@ -1,4 +1,4 @@
-﻿namespace KitchenFridge.Domain.Products
+﻿namespace KitchenFridge.Services.Products
 {
     public class EggsAndSauces : ProductBase
     {
