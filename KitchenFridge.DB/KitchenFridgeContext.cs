@@ -17,20 +17,17 @@ namespace KitchenFridge.DB
         public DbSet<Recipe> Recipes { get; set; } = null!;
         public DbSet<RecipeProduct> RecipeProducts { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=KitchenFridgeDb;Trusted_Connection=True;TrustServerCertificate=True;");
-
-        }
-
+        public KitchenFridgeContext(DbContextOptions<KitchenFridgeContext> options): base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasDiscriminator(p => p.ProductType);
             modelBuilder.Entity<Product>().Property(n => n.Name).HasMaxLength(20);
-                        
+            modelBuilder.Entity<Product>()
+                .Property(p => p.ProductType)
+                .Metadata.SetAfterSaveBehavior(Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Save);
 
-            modelBuilder.Entity<Fridge>()
-                        .Property(n => n.Name).HasMaxLength(20);
+            modelBuilder.Entity<Fridge>().Property(n => n.Name).HasMaxLength(20);
+
 
             modelBuilder.Entity<FridgeProduct>()
                         .ToTable(c => c.HasCheckConstraint("ValidCount", "Count > 0 AND Count < 21"))

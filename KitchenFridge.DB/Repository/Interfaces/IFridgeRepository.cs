@@ -4,9 +4,10 @@ namespace KitchenFridge.DB.Repository.Interfaces
 {
     public interface IFridgeRepository
     {
-        public void Add(Fridge fridge);
+        public int Add(Fridge fridge);
         public List<Fridge> Get();
-        public void Update(int id, string newName);
-        public bool Delete(int id);
+        public void Delete(int id);
+        Fridge GetFridgeById(int id);
+        public void Update(Fridge fridge);
     }
 }
