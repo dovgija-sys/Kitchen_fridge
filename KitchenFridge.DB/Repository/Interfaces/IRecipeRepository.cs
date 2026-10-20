@@ -6,7 +6,8 @@ namespace KitchenFridge.DB.Repository.Interfaces
     {
         public int Add(Recipe recipe);
         public List<Recipe> Get();
-        public void Update(int id, string newName);
+        public void Update(Recipe recipe);
         public void Delete(int id);
+        Recipe GetRecipeById(int id);
     }
 }

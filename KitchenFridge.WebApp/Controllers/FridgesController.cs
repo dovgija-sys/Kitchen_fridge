@@ -1,5 +1,4 @@
-﻿using KitchenFridge.DB.Entities.ProductEntities;
-using KitchenFridge.Services.DTOs;
+﻿using KitchenFridge.Services.DTOs;
 using KitchenFridge.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

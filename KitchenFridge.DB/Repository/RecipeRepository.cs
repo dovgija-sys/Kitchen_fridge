@@ -18,12 +18,24 @@ namespace KitchenFridge.DB.Repository
             var recipes = _db.Recipes.ToList();
             return recipes;
         }
-        public void Update(int id, string newName)
+        public Recipe GetRecipeById(int id)
         {
-            var updRecipe = _db.Recipes.FirstOrDefault(n => n.Id == id);
+            var recipe = _db.Recipes.FirstOrDefault(r => r.Id == id);
+            if (recipe == null)
+            {
+                return null;
+            }
+            else 
+            { 
+                return recipe; 
+            }
+        }
+        public void Update(Recipe recipe)
+        {
+            var updRecipe = _db.Recipes.FirstOrDefault(n => n.Id == recipe.Id);
             if (updRecipe != null)
             {
-                updRecipe.Name = newName;
+                updRecipe.Name = recipe.Name;
                 _db.Recipes.Update(updRecipe);
                 _db.SaveChanges();
             }

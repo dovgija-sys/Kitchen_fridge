@@ -2,6 +2,8 @@
 using KitchenFridge.DB.Repository.Interfaces;
 using KitchenFridge.Services.DTOs;
 using KitchenFridge.Services.Interfaces;
+using KitchenFridge.Services.Exceptions;
+using Microsoft.VisualBasic;
 
 namespace KitchenFridge.Services.Services
 {
@@ -19,14 +21,15 @@ namespace KitchenFridge.Services.Services
             var products = _productRepository.Get();
             return products;
         }
-        public DB.Entities.ProductEntities.Product GetProductById(int id)
+        public Product GetProductById(int id)
         {
             return _productRepository.GetProductById(id);
         }
 
         public int Add(CreateProductDTO createProductDTO)
         {
-            var newProduct = new DB.Entities.ProductEntities.Product
+
+            var newProduct = new Product
             {
                 Name = createProductDTO.Name,
                 ProductType = createProductDTO.ProductType

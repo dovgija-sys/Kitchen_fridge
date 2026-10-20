@@ -17,12 +17,7 @@ namespace KitchenFridge.DB
         public DbSet<Recipe> Recipes { get; set; } = null!;
         public DbSet<RecipeProduct> RecipeProducts { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=KitchenFridgeDb;Trusted_Connection=True;TrustServerCertificate=True;");
-
-        }
-
+        public KitchenFridgeContext(DbContextOptions<KitchenFridgeContext> options): base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasDiscriminator(p => p.ProductType);
