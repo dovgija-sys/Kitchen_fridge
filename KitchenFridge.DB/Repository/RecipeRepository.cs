@@ -21,14 +21,7 @@ namespace KitchenFridge.DB.Repository
         public Recipe GetRecipeById(int id)
         {
             var recipe = _db.Recipes.FirstOrDefault(r => r.Id == id);
-            if (recipe == null)
-            {
-                return null;
-            }
-            else 
-            { 
-                return recipe; 
-            }
+            return recipe; 
         }
         public void Update(Recipe recipe)
         {

@@ -23,10 +23,6 @@ namespace KitchenFridge.DB.Repository
         public Fridge GetFridgeById(int id)
         {
             var fridge = _db.Fridges.FirstOrDefault(n => n.Id == id);
-            if (fridge == null)
-            {
-                return null;
-            }
             return fridge;
         }
         public void Update(Fridge fridge)

@@ -1,4 +1,6 @@
-﻿namespace KitchenFridge.Services.DTOs
+﻿using KitchenFridge.Services.Interfaces;
+
+namespace KitchenFridge.Services.DTOs
 {
     public class UpdateFridgeDTO : CreateFridgeDTO
     {
