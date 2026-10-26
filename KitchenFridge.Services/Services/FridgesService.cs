@@ -14,16 +14,16 @@ namespace KitchenFridge.Services.Services
             _fridgeRepository = fridgeRepository;
         }
 
-        public List<Fridge> Get()
+        public async Task<List<Fridge>> Get()
         {
-            return _fridgeRepository.Get();
+            return await _fridgeRepository.Get();
         }
-        public Fridge GetFridgeById(int id)
+        public async Task<Fridge> GetFridgeById(int id)
         {  
-            return _fridgeRepository.GetFridgeById(id);
+            return await _fridgeRepository.GetFridgeById(id);
         }
 
-        public int Add(CreateFridgeDTO createFridgeDTO)
+        public async Task<int> Add(CreateFridgeDTO createFridgeDTO)
         {
             if (string.IsNullOrEmpty(createFridgeDTO.Name))
             {
@@ -37,10 +37,10 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Fridge name can't contain specials");
             }
-            return _fridgeRepository.Add(new Fridge { Name = createFridgeDTO.Name });
+            return await _fridgeRepository.Add(new Fridge { Name = createFridgeDTO.Name });
         }
 
-        public void Update(UpdateFridgeDTO updateFridgeDTO)
+        public async Task Update(UpdateFridgeDTO updateFridgeDTO)
         {
             if(updateFridgeDTO.Id <= 0)
             {
@@ -58,14 +58,14 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Fridge name can't contain specials");
             }
-            var updateFridge = _fridgeRepository.GetFridgeById(updateFridgeDTO.Id);
+            var updateFridge = await _fridgeRepository.GetFridgeById(updateFridgeDTO.Id);
             updateFridge.Name = updateFridgeDTO.Name;
             updateFridge.Id = updateFridgeDTO.Id;
-            _fridgeRepository.Update(updateFridge);
+            await _fridgeRepository.Update(updateFridge);
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _fridgeRepository.Delete(id);
+            await _fridgeRepository.Delete(id);
         }
     }
 }

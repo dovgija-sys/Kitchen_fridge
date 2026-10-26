@@ -1,5 +1,6 @@
 ﻿using KitchenFridge.DB.Entities.ProductEntities;
 using KitchenFridge.DB.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace KitchenFridge.DB.Repository
 {
@@ -7,40 +8,38 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public ProductRepository(KitchenFridgeContext db) => _db = db;
-        public int Add(Product product)
+        public async Task<int> Add(Product product)
         {
-            _db.Products.Add(product);
-            _db.SaveChanges();
+            await _db.Products.AddAsync(product);
+            await _db.SaveChangesAsync();
             return product.Id;
         }
-        public List<Product> Get()
+        public async Task<List<Product>> Get()
         {
-            var allProducts = _db.Products.ToList();
+            var allProducts = await _db.Products.ToListAsync();
             return allProducts;
         }
-        public Product GetProductById(int id)
-        {
-            var product = _db.Products.FirstOrDefault(p => p.Id == id);
-            return product;
+        public async Task<Product> GetProductById(int id)
+        { 
+            return await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
-        public void Update(Product product) 
+        public async Task Update(Product product) 
         {
-            var updProduct = _db.Products.FirstOrDefault(n => n.Id == product.Id);
+            var updProduct = await _db.Products.FirstOrDefaultAsync(n => n.Id == product.Id);
             if (updProduct != null)
             {
-                updProduct.Name = product.Name;
-                updProduct.ProductType = product.ProductType;
+                updProduct = product;
                 _db.Products.Update(updProduct);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var deleteProduct = _db.Products.FirstOrDefault(n => n.Id == id);
+            var deleteProduct = await _db.Products.FirstOrDefaultAsync(n => n.Id == id);
             if (deleteProduct != null)
             {
                 _db.Products.Remove(deleteProduct);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
     }

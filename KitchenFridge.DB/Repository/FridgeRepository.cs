@@ -1,5 +1,6 @@
 ﻿using KitchenFridge.DB.Entities;
 using KitchenFridge.DB.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace KitchenFridge.DB.Repository
 {
@@ -7,41 +8,39 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public FridgeRepository(KitchenFridgeContext db) => _db = db;
-        public int Add(Fridge fridge)
+        public async Task<int> Add(Fridge fridge)
         {
-            _db.Fridges.Add(fridge);
-            _db.SaveChanges();
+            await _db.Fridges.AddAsync(fridge);
+            await _db.SaveChangesAsync();
 
             return fridge.Id;
         }
-        public List<Fridge> Get()
+        public async Task<List<Fridge>> Get()
         {
-            var fridges = _db.Fridges.ToList();
-            return fridges;
+            return await _db.Fridges.ToListAsync();
         }
 
-        public Fridge GetFridgeById(int id)
+        public async Task<Fridge> GetFridgeById(int id)
         {
-            var fridge = _db.Fridges.FirstOrDefault(n => n.Id == id);
-            return fridge;
+            return await _db.Fridges.FirstOrDefaultAsync(n => n.Id == id);
         }
-        public void Update(Fridge fridge)
+        public async Task Update(Fridge fridge)
         {
-            var updFridge = _db.Fridges.FirstOrDefault(n => n.Id == fridge.Id);
+            var updFridge = await _db.Fridges.FirstOrDefaultAsync(n => n.Id == fridge.Id);
             if (updFridge != null)
             {
                 updFridge.Name = fridge.Name;
                 _db.Fridges.Update(updFridge);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var deleteFridge = _db.Fridges.FirstOrDefault(n => n.Id == id);
+            var deleteFridge = await _db.Fridges.FirstOrDefaultAsync(n => n.Id == id);
             if (deleteFridge != null)
             {
                 _db.Fridges.Remove(deleteFridge);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
     }

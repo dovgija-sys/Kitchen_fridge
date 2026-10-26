@@ -1,5 +1,6 @@
 ﻿using KitchenFridge.DB.Entities;
 using KitchenFridge.DB.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace KitchenFridge.DB.Repository
 {
@@ -7,35 +8,38 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public RecipeProductRepository(KitchenFridgeContext db) => _db = db;
-        public int Add(RecipeProduct recipeProduct)
+        public async Task<int> Add(RecipeProduct recipeProduct)
         {
-            _db.RecipeProducts.Add(recipeProduct);
-            _db.SaveChanges();
+            await _db.RecipeProducts.AddAsync(recipeProduct);
+            await _db.SaveChangesAsync();
             return recipeProduct.Id;
         }
-        public List<RecipeProduct> Get()
+        public async Task<List<RecipeProduct>> Get()
         {
-            var recipeProducts = _db.RecipeProducts.ToList();
-            return recipeProducts;
+            return await _db.RecipeProducts.ToListAsync();
         }
-        public void Update(int id, RecipeProduct recipeProduct)
+        public async Task<RecipeProduct> GetRecipeProductById(int id)
+        {
+            return await _db.RecipeProducts.FirstOrDefaultAsync(i => i.Id == id);
+        }
+        public async Task Update(RecipeProduct recipeProduct)
         {
             
-            var updRecipeProduct = _db.RecipeProducts.FirstOrDefault(i => i.Id == id);
+            var updRecipeProduct = _db.RecipeProducts.FirstOrDefault(i => i.Id == recipeProduct.Id);
             if (updRecipeProduct != null)
             {
                 updRecipeProduct = recipeProduct;
                 _db.RecipeProducts.Update(updRecipeProduct);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var deleteRecipeProduct = _db.RecipeProducts.FirstOrDefault(i => i.Id == id);
+            var deleteRecipeProduct = await _db.RecipeProducts.FirstOrDefaultAsync(i => i.Id == id);
             if (deleteRecipeProduct != null)
             {
                 _db.RecipeProducts.Remove(deleteRecipeProduct);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
     }

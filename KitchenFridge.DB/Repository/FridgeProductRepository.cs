@@ -1,5 +1,6 @@
 ﻿using KitchenFridge.DB.Entities;
 using KitchenFridge.DB.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace KitchenFridge.DB.Repository
 {
@@ -7,34 +8,37 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public FridgeProductRepository(KitchenFridgeContext db) => _db = db;
-        public int Add(FridgeProduct fridgeProduct)
+        public async Task<int> Add(FridgeProduct fridgeProduct)
         {
-            _db.FridgeProducts.Add(fridgeProduct);
-            _db.SaveChanges();
+            await _db.FridgeProducts.AddAsync(fridgeProduct);
+            await _db.SaveChangesAsync();
             return fridgeProduct.Id;
         }
-        public List<FridgeProduct> Get()
-        {
-            var fridgeProducts = _db.FridgeProducts.ToList();
-            return fridgeProducts;
+        public async Task<FridgeProduct> GetFridgeProductById(int id) {
+            return await _db.FridgeProducts.FirstOrDefaultAsync(i => i.Id == id);
         }
-        public void Update(int id, FridgeProduct fridgeProduct)
+
+        public async Task<List<FridgeProduct>> Get()
         {
-            var updFridgeProduct = _db.FridgeProducts.FirstOrDefault(i=>i.Id == id);
+            return await _db.FridgeProducts.ToListAsync();
+        }
+        public async Task Update(FridgeProduct fridgeProduct)
+        {
+            var updFridgeProduct = _db.FridgeProducts.FirstOrDefault(i => i.Id == fridgeProduct.Id);
             if(updFridgeProduct != null)
             {
                 updFridgeProduct = fridgeProduct;
                 _db.FridgeProducts.Update(updFridgeProduct);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var deleteFridgeProduct = _db.FridgeProducts.FirstOrDefault(i => i.Id == id);
+            var deleteFridgeProduct = await _db.FridgeProducts.FirstOrDefaultAsync(i => i.Id == id);
             if (deleteFridgeProduct != null) 
             {
                 _db.FridgeProducts.Remove(deleteFridgeProduct);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
     }
