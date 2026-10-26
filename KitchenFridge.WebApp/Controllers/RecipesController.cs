@@ -14,9 +14,9 @@ namespace KitchenFridge.WebApp.Controllers
         public RecipesController(IRecipesService recipesService) => _recipesService = recipesService;
 
         [HttpGet]
-        public IActionResult GetRecipes()
+        public async Task<IActionResult> GetRecipes()
         {
-            var fridges = _recipesService.GetRcipes();
+            var fridges = await _recipesService.GetRcipes();
             if (fridges == null) 
             { 
                 return NotFound(); 
@@ -24,9 +24,9 @@ namespace KitchenFridge.WebApp.Controllers
             return Ok(fridges);
         }
         [HttpGet("{id:int}")]
-        public IActionResult GetRecipeById([FromRoute]int id)
+        public async Task<IActionResult> GetRecipeById([FromRoute]int id)
         {
-            var recipe = _recipesService.GetRecipeById(id);
+            var recipe = await _recipesService.GetRecipeById(id);
             if(recipe == null)
             {
                 return NotFound();
@@ -34,21 +34,21 @@ namespace KitchenFridge.WebApp.Controllers
             return Ok(recipe);
         }
         [HttpPost]
-        public IActionResult Add([FromBody] CreateRecipeDTO createRecipeDTO)
+        public async Task<IActionResult> Add([FromBody] CreateRecipeDTO createRecipeDTO)
         {
-            var response = _recipesService.Add(createRecipeDTO);
+            var response = await _recipesService.Add(createRecipeDTO);
             return StatusCode(StatusCodes.Status201Created,response);
         }
         [HttpPut]
-        public IActionResult Update([FromBody] UpdateRecipeDTO updateRecipeDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateRecipeDTO updateRecipeDTO)
         {
-            _recipesService.Update(updateRecipeDTO);
+            await _recipesService.Update(updateRecipeDTO);
             return Ok();
         }
         [HttpDelete("{id:int}")]
-        public IActionResult Delete([FromRoute]int id) 
+        public async Task<IActionResult> Delete([FromRoute]int id) 
         {
-            _recipesService.Delete(id);
+            await _recipesService.Delete(id);
             return Ok();
         }
     }

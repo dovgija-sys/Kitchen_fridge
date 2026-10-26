@@ -15,9 +15,9 @@ namespace KitchenFridge.WebApp.Controllers
         public ProductsController(IProductsService productsService) => _productsService = productsService;
 
         [HttpGet]
-        public IActionResult GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            var products = _productsService.GetProducts();
+            var products = await _productsService.GetProducts();
             if (products == null)
             {
                 return NotFound();
@@ -26,9 +26,9 @@ namespace KitchenFridge.WebApp.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetProductById([FromRoute] int id)
+        public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
-            var product = _productsService.GetProductById(id);
+            var product = await _productsService.GetProductById(id);
             if (product == null)
             {
                 return NotFound();
@@ -36,21 +36,21 @@ namespace KitchenFridge.WebApp.Controllers
             return Ok(product);
         }
         [HttpPost]
-        public IActionResult Add([FromBody] CreateProductDTO createProductDTO)
+        public async Task<IActionResult> Add([FromBody] CreateProductDTO createProductDTO)
         {
-            var response = _productsService.Add(createProductDTO);
+            var response = await _productsService.Add(createProductDTO);
             return StatusCode(StatusCodes.Status201Created, response);
         }
         [HttpPut]
-        public IActionResult Update([FromBody] UpdateProductDTO updateProductDTO)
+        public async Task<IActionResult> Update([FromBody] UpdateProductDTO updateProductDTO)
         {
-            _productsService.Update(updateProductDTO);
+            await _productsService.Update(updateProductDTO);
             return Ok();
         }
         [HttpDelete("{id:int}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _productsService.Delete(id);
+            await _productsService.Delete(id);
             return Ok();
         }
     }
