@@ -15,16 +15,20 @@ namespace KitchenFridge.Services.Services
             _recipeRepository = fridgeRepository;
         }
 
-        public List<Recipe> Get()
+        public async Task<List<Recipe>> GetRcipes()
         {
-            return _recipeRepository.Get();
+            return await _recipeRepository.Get();
         }
-        public Recipe GetRecipeById(int id)
+        public async Task<Recipe> GetRecipeById(int id)
         {
-            return _recipeRepository.GetRecipeById(id);
+            if (id <= 0)
+            {
+                throw new ValidationException("Id can't be less than or equal to 0");
+            }
+            return await _recipeRepository.GetRecipeById(id);
         }
 
-        public int Add(CreateRecipeDTO createRecipeDTO)
+        public async Task<int> Add(CreateRecipeDTO createRecipeDTO)
         {
             if (string.IsNullOrEmpty(createRecipeDTO.Name))
             {
@@ -38,10 +42,10 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Recipe name can't contain specials");
             }
-            return _recipeRepository.Add(new Recipe { Name = createRecipeDTO.Name });
+            return await _recipeRepository.Add(new Recipe { Name = createRecipeDTO.Name });
         }
 
-        public void Update(UpdateRecipeDTO updateRecipeDTO)
+        public async Task Update(UpdateRecipeDTO updateRecipeDTO)
         {
             if (updateRecipeDTO.Id <= 0)
             {
@@ -59,14 +63,18 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Recipe name can't contain specials");
             }
-            var updateRecipe = _recipeRepository.GetRecipeById(updateRecipeDTO.Id);
+            var updateRecipe = await _recipeRepository.GetRecipeById(updateRecipeDTO.Id);
             updateRecipe.Name = updateRecipeDTO.Name;
             updateRecipe.Id = updateRecipeDTO.Id;
-            _recipeRepository.Update(updateRecipe);
+            await _recipeRepository.Update(updateRecipe);
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _recipeRepository.Delete(id);
+            if (id <= 0)
+            {
+                throw new ValidationException("Id can't be less than or equal to 0");
+            }
+            await _recipeRepository.Delete(id);
         }
     }
 }

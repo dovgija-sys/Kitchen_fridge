@@ -16,7 +16,7 @@ namespace KitchenFridge.WebApp.Controllers
         [HttpGet]
         public IActionResult GetRecipes()
         {
-            var fridges = _recipesService.Get();
+            var fridges = _recipesService.GetRcipes();
             if (fridges == null) 
             { 
                 return NotFound(); 

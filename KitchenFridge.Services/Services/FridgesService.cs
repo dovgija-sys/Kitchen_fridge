@@ -14,7 +14,7 @@ namespace KitchenFridge.Services.Services
             _fridgeRepository = fridgeRepository;
         }
 
-        public async Task<List<Fridge>> Get()
+        public async Task<List<Fridge>> GetFridges()
         {
             return await _fridgeRepository.Get();
         }
@@ -65,6 +65,10 @@ namespace KitchenFridge.Services.Services
         }
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ValidationException("Id can't be less than or equal to 0");
+            }
             await _fridgeRepository.Delete(id);
         }
     }

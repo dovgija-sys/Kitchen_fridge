@@ -14,7 +14,7 @@ namespace KitchenFridge.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFridges()
         {
-            var fridges = await _fridgesService.Get();
+            var fridges = await _fridgesService.GetFridges();
             if (fridges == null)
             {
                 return NotFound();
