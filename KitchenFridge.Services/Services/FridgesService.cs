@@ -35,7 +35,7 @@ namespace KitchenFridge.Services.Services
             }
             else if (createFridgeDTO.Name.Any(ch => !char.IsLetterOrDigit(ch)))
             {
-                throw new ValidationException("Fridge name cann't contain specials");
+                throw new ValidationException("Fridge name can't contain specials");
             }
             return _fridgeRepository.Add(new Fridge { Name = createFridgeDTO.Name });
         }
@@ -56,7 +56,7 @@ namespace KitchenFridge.Services.Services
             }
             else if (updateFridgeDTO.Name.Any(ch => !char.IsLetterOrDigit(ch)))
             {
-                throw new ValidationException("Fridge name cann't contain specials");
+                throw new ValidationException("Fridge name can't contain specials");
             }
             var updateFridge = _fridgeRepository.GetFridgeById(updateFridgeDTO.Id);
             updateFridge.Name = updateFridgeDTO.Name;

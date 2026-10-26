@@ -36,7 +36,7 @@ namespace KitchenFridge.Services.Services
             }
             else if (createRecipeDTO.Name.Any(ch => !char.IsLetterOrDigit(ch)))
             {
-                throw new ValidationException("Recipe name cann't contain specials");
+                throw new ValidationException("Recipe name can't contain specials");
             }
             return _recipeRepository.Add(new Recipe { Name = createRecipeDTO.Name });
         }
@@ -57,7 +57,7 @@ namespace KitchenFridge.Services.Services
             }
             else if (updateRecipeDTO.Name.Any(ch => !char.IsLetterOrDigit(ch)))
             {
-                throw new ValidationException("Recipe name cann't contain specials");
+                throw new ValidationException("Recipe name can't contain specials");
             }
             var updateRecipe = _recipeRepository.GetRecipeById(updateRecipeDTO.Id);
             updateRecipe.Name = updateRecipeDTO.Name;

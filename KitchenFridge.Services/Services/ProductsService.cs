@@ -38,7 +38,7 @@ namespace KitchenFridge.Services.Services
             }
             else if (createProductDTO.Name.Any(ch => !char.IsLetterOrDigit(ch)))
             {
-                throw new ValidationException("Product name cann't contain specials");
+                throw new ValidationException("Product name can't contain specials");
             }
             var newProduct = new Product
             {
@@ -63,7 +63,7 @@ namespace KitchenFridge.Services.Services
             }
             else if (updateProductDTO.Name.Any(ch => !char.IsLetterOrDigit(ch)))
             {
-                throw new ValidationException("Product name cann't contain specials");
+                throw new ValidationException("Product name can't contain specials");
             }
             var updateProduct = _productRepository.GetProductById(updateProductDTO.Id);
             updateProduct.Name = updateProductDTO.Name;
