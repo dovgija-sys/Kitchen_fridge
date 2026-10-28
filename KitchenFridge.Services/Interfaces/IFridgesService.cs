@@ -6,10 +6,10 @@ namespace KitchenFridge.Services.Interfaces
 {
     public interface IFridgesService
     {
-        public int Add(CreateFridgeDTO createFridgeDTO);
-        void Delete(int id);
-        public List<Fridge> Get();
-        public Fridge GetFridgeById(int id);
-        void Update(UpdateFridgeDTO updateFridgeDTO);
+        public Task<int> Add(CreateFridgeDTO createFridgeDTO);
+        public Task Delete(int id);
+        public Task<List<Fridge>> GetFridges();
+        public Task<Fridge> GetFridgeById(int id);
+        public Task Update(UpdateFridgeDTO updateFridgeDTO);
     }
 }

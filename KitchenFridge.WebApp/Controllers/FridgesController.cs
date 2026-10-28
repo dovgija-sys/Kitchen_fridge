@@ -12,9 +12,9 @@ namespace KitchenFridge.WebApp.Controllers
         public FridgesController(IFridgesService fridgesService) => _fridgesService = fridgesService;
 
         [HttpGet]
-        public IActionResult GetFridges()
+        public async Task<IActionResult> GetFridges()
         {
-            var fridges = _fridgesService.Get();
+            var fridges = await _fridgesService.GetFridges();
             if (fridges == null)
             {
                 return NotFound();
@@ -23,9 +23,9 @@ namespace KitchenFridge.WebApp.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetFridgeById([FromRoute] int id)
+        public async Task<IActionResult> GetFridgeById([FromRoute] int id)
         {
-            var fridge = _fridgesService.GetFridgeById(id);
+            var fridge = await _fridgesService.GetFridgeById(id);
             if (fridge == null)
             {
                 return NotFound();
@@ -34,22 +34,22 @@ namespace KitchenFridge.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddFridge([FromBody] CreateFridgeDTO createFridgeDTO) {
-            int response = _fridgesService.Add(createFridgeDTO);
+        public async Task<IActionResult> AddFridge([FromBody] CreateFridgeDTO createFridgeDTO) {
+            int response = await _fridgesService.Add(createFridgeDTO);
             return StatusCode(StatusCodes.Status201Created, response);
         }
 
         [HttpPut]
-        public IActionResult UpdateFridge([FromBody] UpdateFridgeDTO updateFridgeDTO)
+        public async Task<IActionResult> UpdateFridge([FromBody] UpdateFridgeDTO updateFridgeDTO)
         {
-            _fridgesService.Update(updateFridgeDTO);
+            await _fridgesService.Update(updateFridgeDTO);
             return Ok();
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteFridge([FromRoute] int id)
+        public async Task<IActionResult> DeleteFridge([FromRoute] int id)
         {
-            _fridgesService.Delete(id);
+            await _fridgesService.Delete(id);
             return Ok();
         }
     }

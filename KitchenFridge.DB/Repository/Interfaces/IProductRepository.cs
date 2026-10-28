@@ -4,10 +4,10 @@ namespace KitchenFridge.DB.Repository.Interfaces
 {
     public interface IProductRepository
     {
-        public int Add(Product product);
-        public List<Product> Get();
-        public void Update(Product product);
-        public void Delete(int id);
-        Product GetProductById(int id);
+        public Task<int> Add(Product product);
+        public Task<List<Product>> Get();
+        public Task Update(Product product);
+        public Task Delete(int id);
+        public Task<Product> GetProductById(int id);
     }
 }

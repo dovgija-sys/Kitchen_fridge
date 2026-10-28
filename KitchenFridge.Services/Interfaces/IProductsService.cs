@@ -5,10 +5,10 @@ namespace KitchenFridge.Services.Interfaces
 {
     public interface IProductsService
     {
-        int Add(CreateProductDTO createProductDTO);
-        void Delete(int id);
-        Product GetProductById(int id);
-        List<Product> GetProducts();
-        void Update(UpdateProductDTO updateProductDTO);
+        public Task<int> Add(CreateProductDTO createProductDTO);
+        public Task Delete(int id);
+        public Task<Product> GetProductById(int id);
+        public Task<List<Product>> GetProducts();
+        public Task Update(UpdateProductDTO updateProductDTO);
     }
 }

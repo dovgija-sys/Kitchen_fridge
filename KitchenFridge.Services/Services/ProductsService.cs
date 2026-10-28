@@ -16,17 +16,20 @@ namespace KitchenFridge.Services.Services
             _productRepository = productRepository;
         }
 
-        public List<Product> GetProducts()
+        public async Task<List<Product>> GetProducts()
         {
-            var products = _productRepository.Get();
-            return products;
+            return await _productRepository.Get(); ;
         }
-        public Product GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            return _productRepository.GetProductById(id);
+            if (id <= 0)
+            {
+                throw new ValidationException("Id can't be less than or equal to 0");
+            }
+            return await _productRepository.GetProductById(id);
         }
 
-        public int Add(CreateProductDTO createProductDTO)
+        public async Task<int> Add(CreateProductDTO createProductDTO)
         {
             if (string.IsNullOrEmpty(createProductDTO.Name))
             {
@@ -40,14 +43,9 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Product name can't contain specials");
             }
-            var newProduct = new Product
-            {
-                Name = createProductDTO.Name,
-                ProductType = createProductDTO.ProductType
-            };
-            return _productRepository.Add(newProduct);
+            return await _productRepository.Add(new Product {Name = createProductDTO.Name});
         }
-        public void Update(UpdateProductDTO updateProductDTO)
+        public async Task Update(UpdateProductDTO updateProductDTO)
         {
             if (updateProductDTO.Id <= 0)
             {
@@ -65,14 +63,18 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Product name can't contain specials");
             }
-            var updateProduct = _productRepository.GetProductById(updateProductDTO.Id);
+            var updateProduct = await _productRepository.GetProductById(updateProductDTO.Id);
             updateProduct.Name = updateProductDTO.Name;
             updateProduct.Id = updateProductDTO.Id;
-            _productRepository.Update(updateProduct);
+            await _productRepository.Update(updateProduct);
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _productRepository.Delete(id);
+            if (id <= 0)
+            {
+                throw new ValidationException("Id can't be less than or equal to 0");
+            }
+            await _productRepository.Delete(id);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using KitchenFridge.DB.Entities;
 using KitchenFridge.DB.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace KitchenFridge.DB.Repository
 {
@@ -7,39 +8,37 @@ namespace KitchenFridge.DB.Repository
     {
         private readonly KitchenFridgeContext _db;
         public RecipeRepository(KitchenFridgeContext db) => _db = db;
-        public int Add(Recipe recipe)
+        public async Task<int> Add(Recipe recipe)
         {
-            _db.Recipes.Add(recipe);
-            _db.SaveChanges();
+            await _db.Recipes.AddAsync(recipe);
+            await _db.SaveChangesAsync();
             return recipe.Id;
         }
-        public List<Recipe> Get()
+        public async Task<List<Recipe>> Get()
         {
-            var recipes = _db.Recipes.ToList();
-            return recipes;
+            return await _db.Recipes.ToListAsync();
         }
-        public Recipe GetRecipeById(int id)
-        {
-            var recipe = _db.Recipes.FirstOrDefault(r => r.Id == id);
-            return recipe; 
+        public async Task<Recipe> GetRecipeById(int id)
+        { 
+            return await _db.Recipes.FirstOrDefaultAsync(r => r.Id == id);  
         }
-        public void Update(Recipe recipe)
+        public async Task Update(Recipe recipe)
         {
             var updRecipe = _db.Recipes.FirstOrDefault(n => n.Id == recipe.Id);
             if (updRecipe != null)
             {
-                updRecipe.Name = recipe.Name;
+                updRecipe = recipe;
                 _db.Recipes.Update(updRecipe);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var deleteRecipe = _db.Recipes.FirstOrDefault(n => n.Id == id);
+            var deleteRecipe = await _db.Recipes.FirstOrDefaultAsync(n => n.Id == id);
             if (deleteRecipe != null)
             {
                 _db.Recipes.Remove(deleteRecipe);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
         }
     }
