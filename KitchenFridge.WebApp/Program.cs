@@ -1,4 +1,4 @@
-
+using Serilog;
 using KitchenFridge.DB;
 using KitchenFridge.DB.Repository;
 using KitchenFridge.DB.Repository.Interfaces;
