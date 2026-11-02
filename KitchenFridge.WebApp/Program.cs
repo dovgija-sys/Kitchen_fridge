@@ -1,4 +1,3 @@
-
 using KitchenFridge.DB;
 using KitchenFridge.DB.Repository;
 using KitchenFridge.DB.Repository.Interfaces;
@@ -6,10 +5,14 @@ using KitchenFridge.Services.Interfaces;
 using KitchenFridge.Services.Services;
 using KitchenFridge.WebApp;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefoultConnection");
 
+builder.Host.UseSerilog((context, configuration) =>
+configuration.ReadFrom.Configuration(context.Configuration));
+
+var connectionString = builder.Configuration.GetConnectionString("DefoultConnection");
 
 builder.Services.AddScoped<IFridgesService, FridgesService>();
 builder.Services.AddScoped<IFridgeRepository, FridgeRepository>();
@@ -39,3 +42,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

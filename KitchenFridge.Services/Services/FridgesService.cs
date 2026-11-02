@@ -3,24 +3,31 @@ using KitchenFridge.DB.Repository.Interfaces;
 using KitchenFridge.Services.DTOs;
 using KitchenFridge.Services.Exceptions;
 using KitchenFridge.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace KitchenFridge.Services.Services
 {
     public class FridgesService : IFridgesService
     {
         private readonly IFridgeRepository _fridgeRepository;
-        public FridgesService(IFridgeRepository fridgeRepository)
+        private readonly ILogger<FridgesService> _logger;
+        public FridgesService(IFridgeRepository fridgeRepository, ILogger<FridgesService> logger)
         {
             _fridgeRepository = fridgeRepository;
+            _logger = logger;
         }
 
         public async Task<List<Fridge>> GetFridges()
         {
-            return await _fridgeRepository.Get();
+            var fridges = await _fridgeRepository.Get();
+            _logger.LogInformation("A list of all refrigerators has been compiled; quantity: {count}", fridges.Count());
+            return fridges; 
         }
         public async Task<Fridge> GetFridgeById(int id)
-        {  
-            return await _fridgeRepository.GetFridgeById(id);
+        {
+            var fridge = await _fridgeRepository.GetFridgeById(id);
+            _logger.LogInformation("Retrieved from the database: refrigerator with ID {Id}, name: {Name}", fridge.Id, fridge.Name);
+            return fridge;
         }
 
         public async Task<int> Add(CreateFridgeDTO createFridgeDTO)
@@ -37,7 +44,9 @@ namespace KitchenFridge.Services.Services
             {
                 throw new ValidationException("Fridge name can't contain specials");
             }
-            return await _fridgeRepository.Add(new Fridge { Name = createFridgeDTO.Name });
+            var id = await _fridgeRepository.Add(new Fridge { Name = createFridgeDTO.Name });
+            _logger.LogInformation("Fridge has been created with ID: {ID}", id);
+            return id;
         }
 
         public async Task Update(UpdateFridgeDTO updateFridgeDTO)
@@ -62,6 +71,7 @@ namespace KitchenFridge.Services.Services
             updateFridge.Name = updateFridgeDTO.Name;
             updateFridge.Id = updateFridgeDTO.Id;
             await _fridgeRepository.Update(updateFridge);
+            _logger.LogInformation("Fridge with ID {Id} has been updated, name: {Name}", updateFridge.Id, updateFridge.Name );
         }
         public async Task Delete(int id)
         {
@@ -70,6 +80,7 @@ namespace KitchenFridge.Services.Services
                 throw new ValidationException("Id can't be less than or equal to 0");
             }
             await _fridgeRepository.Delete(id);
+            _logger.LogInformation("Fridge with ID: {Id} has been deleted", id);
         }
     }
 }
