@@ -9,8 +9,10 @@ namespace KitchenFridge.WebApp.Controllers
     public class FridgesController : ControllerBase
     {
         private readonly IFridgesService _fridgesService;
-        public FridgesController(IFridgesService fridgesService) => _fridgesService = fridgesService;
-
+        public FridgesController(IFridgesService fridgesService)
+        {
+            _fridgesService = fridgesService;
+        }
         [HttpGet]
         public async Task<IActionResult> GetFridges()
         {
